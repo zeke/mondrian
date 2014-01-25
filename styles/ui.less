@@ -10,6 +10,7 @@
 
 // Colorz
 
+@transform: rgba(115, 160, 235, 0.6);
 @transform-light: rgba(115, 160, 235, 0.3);
 @transform-group-light: rgba(223, 90, 180, 0.3);
 
@@ -1352,8 +1353,19 @@ svg#hover-targets {
   position: absolute;
   top: -9999px;
   left: -9999px;
-  height: 0px;
-  border-bottom: 1px solid @transform-light;
+  border-bottom: 1px solid @transform;
+  height: 1px;
+
+  &:before {
+    display: block;
+    width: 5px;
+    height: 5px;
+    content: "";
+    position: relative;
+    top: -1px;
+    .bgimg("point-handle.png");
+  }
+
 }
 
 #r-nd-o {
