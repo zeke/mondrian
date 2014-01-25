@@ -5,6 +5,7 @@
   border-bottom: 1px solid #0d0d0d;
   position: absolute;
   top: 10px;
+  cursor: pointer;
   left: 20px;
 }
 #logo > div {
