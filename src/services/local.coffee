@@ -28,7 +28,9 @@ services.local = new Service
       localStorage.removeItem("file-content")
       localStorage.removeItem("file-metadata")
       # Set up demo files
-      for title, contents of demoFiles
+    for title, contents of demoFiles
+      existing = new LocalFile("#{title}.svg")
+      if !existing.contents?
         f = new LocalFile("#{title}.svg").set(contents).put()
 
 
