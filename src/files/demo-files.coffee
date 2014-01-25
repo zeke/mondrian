@@ -1,10 +1,45 @@
 ###
 
   Preload new visitors' files with a sample file
+  and a file that serves as the meta window
 
 ###
 
 demoFiles =
+  about:  """
+          <!-- Made in Mondrian.io -->
+          <svg id="main" width="600" height="400" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:mondrian="http://mondrian.io/xml" viewbox="0 0 600 400" enable-background="new 0 0 600 400" style="width: 600px; height: 400px; -webkit-transform: scale(1);">
+          <path fill="rgba(63, 177, 221, 1)" stroke="none" d="M482.1999999999956,282.14148936170324 L507.8924999999999,282.14148936170324 L507.8924999999999,355.2414893617156 L482.1999999999956,355.2414893617156 L482.1999999999956,282.14148936170324" stroke-width="1" >
+          </path>
+          <path fill="rgba(243, 208, 47, 1)" stroke="none" d="M454.32499999999106,280.4373917285668 L479.0499999999954,280.4373917285668 L479.0499999999954,315.91239172857286 L454.32499999999106,315.91239172857286 L454.32499999999106,280.4373917285668" stroke-width="1" >
+          </path>
+          <path fill="rgba(224, 64, 74, 1)" stroke="none" d="M428.44999999998663,280.4373917285668 L453.17499999999075,280.4373917285668 L453.17499999999075,353.5373917285793 L428.44999999998663,353.5373917285793 L428.44999999998663,280.4373917285668" stroke-width="1" >
+          </path>
+          <path fill="rgba(55, 54, 54, 1)" stroke="none" d="M508,286.44148936170393 V275.6914893617021 H432.74999999998727 H421.99999999998545 V286.44148936170393 V350.94148936171473 V361.6914893617166 H432.74999999998727 H459.6249999999918 H475.74913999999467 H508 V350.94148936171473 H486.49999999999636 V286.44148936170393 H508 M448.87499999999,350.94148936171473 H432.74999999998727 V286.44148936170393 H448.87499999999 V350.94148936171473 M475.74999999999454,313.31648936170853 H459.6249999999918 V286.44148936170393 H475.74999999999454 V313.31648936170853z" stroke-width="1" >
+          </path>
+          <text x="23.31019036952614" y="208.05431131017576" font-size="24" font-family="Arial" fill="rgba(63, 177, 221, 1)" stroke="none" stroke-width="1" transform="rotate(0 175.088 198.97) scale(0.7569988801791713 0.7569988801791713) translate(7.482709038738423 66.7866650211659)" style="display: block;" >
+            http://github.com/artursapek/mondrian
+          </text>
+          <text x="25.310190369540692" y="331.1371780515117" font-size="24" font-family="Arial" fill="rgba(55, 54, 54, 1)" stroke="none" stroke-width="1" transform="rotate(0 43.478 322.053) scale(0.7569988801791713 0.7569988801791713) translate(8.124720873062621 106.29699354612139)" style="display: block;" >
+            MIT
+          </text>
+          <text x="24.553191489361552" y="294.0442329227322" font-size="34" font-family="Arial" fill="rgba(55, 54, 54, 1)" stroke="none" stroke-width="1" transform="rotate(0 69.216 281.175) scale(0.7569988801791713 0.7569988801791713) translate(7.881719753241802 94.38993867490075)" style="display: block;" >
+            License
+          </text>
+          <text x="192.2026875699887" y="332.86954087346027" font-size="24" font-family="Arial" fill="rgba(55, 54, 54, 1)" stroke="none" stroke-width="1" transform="rotate(0 239.894 323.786) scale(0.7569988801791713 0.7569988801791713) translate(61.698200003975685 106.85309226263446)" style="display: block;" >
+            Artur Sapek
+          </text>
+          <text x="191.44568868980951" y="295.7765957446808" font-size="34" font-family="Arial" fill="rgba(55, 54, 54, 1)" stroke="none" stroke-width="1" transform="rotate(0 261.468 282.908) scale(0.7569988801791713 0.7569988801791713) translate(61.455198884154846 94.94603739141382)" style="display: block;" >
+            Contributors
+          </text>
+          <text x="191.44568868980951" y="360.49999999999994" font-size="24" font-family="Arial" fill="rgba(55, 54, 54, 1)" stroke="none" stroke-width="1" transform="rotate(0 247.085 351.416) scale(0.7569988801791713 0.7569988801791713) translate(61.455198884154846 115.72263313609469)" style="display: block;" >
+            Silas Baronda
+          </text>
+          <text x="24.30459126538298" y="178.86898096303136" font-size="24" font-family="Arial" fill="rgba(55, 54, 54, 1)" stroke="none" stroke-width="1" transform="rotate(0 142.018 169.785) scale(0.7569988801791713 0.7569988801791713) translate(7.801917610337439 57.41800128547014)" style="display: block;" >
+            This software is open-source.</text>
+          </svg>
+          """
+
   albq: """
         <svg id="main" width="800" height="470.59" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:mondrian="http://mondrian.io/xml" viewbox="0 0 800 470.59" enable-background="new 0 0 800 470.59" style="width: 800px; height: 470.59px; -webkit-transform: scale(1);">
           <rect opacity="1" fill="rgb(199, 15, 46)" fill-opacity="1" stroke="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="miter" stroke-miterlimit="4" stroke-dasharray="none" stroke-opacity="1" id="rect3491" width="800" height="470.58984" x="0" y="0.00015633789" >
