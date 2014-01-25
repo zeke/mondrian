@@ -151,12 +151,10 @@ class Text extends Monsvg
 
   hover: ->
     return if ui.selection.elements.all.has @
-    ###
     $("#text-underline").show().css
       left: @origin.x * ui.canvas.zoom
       top:  @origin.y * ui.canvas.zoom
       width: "#{@width() * ui.canvas.zoom}px"
-    ###
 
   unhover: ->
     $("#text-underline").hide()
