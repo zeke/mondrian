@@ -234,6 +234,9 @@ window.ui =
 
   click: (e, target) ->
     # Certain targets we ignore.
+    if (target.id == "logo")
+      new LocalFile("about.svg").use(true)
+
     if (target.nodeName.toLowerCase() is "emph") or (target.hasAttribute("buttontext"))
       t = $(target).closest(".menu-item")[0]
       if not t?
