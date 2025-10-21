@@ -223,6 +223,33 @@
                 }
             });
         }
+
+        function keyPressed() {
+            // Add a line with + or =
+            if (key === '+' || key === '=') {
+                // Alternate between vertical and horizontal
+                let verticalLines = lines.filter(l => l.isVertical);
+                let horizontalLines = lines.filter(l => !l.isVertical);
+
+                if (verticalLines.length <= horizontalLines.length) {
+                    // Add a vertical line
+                    let newX = random(width * 0.2, width * 0.8);
+                    lines.push({ x: newX, y1: 0, y2: height, isVertical: true });
+                } else {
+                    // Add a horizontal line
+                    let newY = random(height * 0.2, height * 0.8);
+                    lines.push({ y: newY, x1: 0, x2: width, isVertical: false });
+                }
+
+                assignColors();
+            }
+
+            // Remove a line with -
+            if (key === '-' && lines.length > 0) {
+                lines.pop();
+                assignColors();
+            }
+        }
     </script>
 </body>
 </html>
