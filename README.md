@@ -2,7 +2,7 @@
 
 An interactive Mondrian-inspired composition built with p5.js. Click and drag any of the black bars to resize the boxes and create your own geometric art.
 
-https://github.com/user-attachments/assets/05e83e5e-0000-0000-0000-000000000000
+https://github.com/user-attachments/assets/73e96a13-ec76-47fc-9daa-32c39b47cd84
 
 ## Features
 
@@ -10,10 +10,6 @@ https://github.com/user-attachments/assets/05e83e5e-0000-0000-0000-000000000000
 - Interactive grid with draggable dividers
 - Full-screen responsive canvas
 - Persistent colors that don't flicker when resizing
-
-## Demo
-
-See [demo.mp4](demo.mp4) for a video demonstration of the interactive features.
 
 ## Usage
 
