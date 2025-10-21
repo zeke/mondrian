@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Mondrian</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Mondrian colors
+        const MONDRIAN_RED = '#E72F24';
+        const MONDRIAN_BLUE = '#0A61A6';
+        const MONDRIAN_YELLOW = '#F4D927';
+        const MONDRIAN_WHITE = '#F0EDE6';
+        const MONDRIAN_BLACK = '#232629';
+        const LINE_WIDTH = 12;
+
+        let lines = [];
+        let draggingLine = null;
+        let dragOffset = 0;
+        let cellColors = new Map(); // Store colors for each cell by a unique key
+
+        function setup() {
+            createCanvas(windowWidth, windowHeight);
+
+            // Initialize with some vertical and horizontal lines
+            // Vertical lines
+            lines.push({ x: width * 0.3, y1: 0, y2: height, isVertical: true });
+            lines.push({ x: width * 0.5, y1: 0, y2: height, isVertical: true });
+            lines.push({ x: width * 0.72, y1: 0, y2: height, isVertical: true });
+
+            // Horizontal lines
+            lines.push({ y: height * 0.25, x1: 0, x2: width, isVertical: false });
+            lines.push({ y: height * 0.52, x1: 0, x2: width, isVertical: false });
+            lines.push({ y: height * 0.68, x1: 0, x2: width, isVertical: false });
+
+            // Pre-assign colors
+            assignColors();
+        }
+
+        function draw() {
+            background(MONDRIAN_WHITE);
+
+            // Get all rectangles formed by the lines
+            let rectangles = getRectangles();
+
+            // Fill rectangles with Mondrian colors
+            rectangles.forEach((r, i) => {
+                let key = getCellKey(r);
+                let fillColor = cellColors.get(key);
+                if (!fillColor) {
+                    fillColor = MONDRIAN_WHITE;
+                }
+                fill(fillColor);
+                noStroke();
+                rect(r.x, r.y, r.w, r.h);
+            });
+
+            // Draw the black lines
+            stroke(MONDRIAN_BLACK);
+            strokeWeight(LINE_WIDTH);
+
+            lines.forEach(l => {
+                if (l.isVertical) {
+                    line(l.x, l.y1, l.x, l.y2);
+                } else {
+                    line(l.x1, l.y, l.x2, l.y);
+                }
+            });
+
+            // Change cursor when hovering over a line
+            if (getHoveredLine()) {
+                cursor(getHoveredLine().isVertical ? 'ew-resize' : 'ns-resize');
+            } else {
+                cursor(ARROW);
+            }
+        }
+
+        function getRectangles() {
+            // Get all unique x and y positions
+            let xPositions = [0, width];
+            let yPositions = [0, height];
+
+            lines.forEach(line => {
+                if (line.isVertical) {
+                    xPositions.push(line.x);
+                } else {
+                    yPositions.push(line.y);
+                }
+            });
+
+            xPositions = [...new Set(xPositions)].sort((a, b) => a - b);
+            yPositions = [...new Set(yPositions)].sort((a, b) => a - b);
+
+            // Create rectangles from grid
+            let rectangles = [];
+            for (let i = 0; i < xPositions.length - 1; i++) {
+                for (let j = 0; j < yPositions.length - 1; j++) {
+                    rectangles.push({
+                        x: xPositions[i],
+                        y: yPositions[j],
+                        w: xPositions[i + 1] - xPositions[i],
+                        h: yPositions[j + 1] - yPositions[j]
+                    });
+                }
+            }
+
+            return rectangles;
+        }
+
+        function getCellKey(rect) {
+            // Create a unique key based on grid position
+            let xPositions = [0, width];
+            let yPositions = [0, height];
+
+            lines.forEach(l => {
+                if (l.isVertical) {
+                    xPositions.push(l.x);
+                } else {
+                    yPositions.push(l.y);
+                }
+            });
+
+            xPositions = [...new Set(xPositions)].sort((a, b) => a - b);
+            yPositions = [...new Set(yPositions)].sort((a, b) => a - b);
+
+            let col = xPositions.findIndex(x => Math.abs(x - rect.x) < 1);
+            let row = yPositions.findIndex(y => Math.abs(y - rect.y) < 1);
+
+            return `${col},${row}`;
+        }
+
+        function assignColors() {
+            cellColors.clear();
+            let rectangles = getRectangles();
+
+            // Define color palette with weights
+            const colors = [
+                MONDRIAN_WHITE, MONDRIAN_WHITE, MONDRIAN_WHITE, // 3x white
+                MONDRIAN_RED,
+                MONDRIAN_BLUE,
+                MONDRIAN_YELLOW,
+                MONDRIAN_BLACK
+            ];
+
+            // Assign colors to each cell
+            rectangles.forEach(r => {
+                let key = getCellKey(r);
+                // Use a pseudo-random selection based on position
+                let hash = 0;
+                for (let i = 0; i < key.length; i++) {
+                    hash = ((hash << 5) - hash) + key.charCodeAt(i);
+                    hash = hash & hash;
+                }
+                let colorIndex = Math.abs(hash) % colors.length;
+                cellColors.set(key, colors[colorIndex]);
+            });
+        }
+
+        function getHoveredLine() {
+            for (let line of lines) {
+                if (line.isVertical) {
+                    if (abs(mouseX - line.x) < LINE_WIDTH && mouseY >= line.y1 && mouseY <= line.y2) {
+                        return line;
+                    }
+                } else {
+                    if (abs(mouseY - line.y) < LINE_WIDTH && mouseX >= line.x1 && mouseX <= line.x2) {
+                        return line;
+                    }
+                }
+            }
+            return null;
+        }
+
+        function mousePressed() {
+            let hoveredLine = getHoveredLine();
+            if (hoveredLine) {
+                draggingLine = hoveredLine;
+                if (hoveredLine.isVertical) {
+                    dragOffset = mouseX - hoveredLine.x;
+                } else {
+                    dragOffset = mouseY - hoveredLine.y;
+                }
+            }
+        }
+
+        function mouseDragged() {
+            if (draggingLine) {
+                if (draggingLine.isVertical) {
+                    draggingLine.x = constrain(mouseX - dragOffset, LINE_WIDTH, width - LINE_WIDTH);
+                } else {
+                    draggingLine.y = constrain(mouseY - dragOffset, LINE_WIDTH, height - LINE_WIDTH);
+                }
+            }
+        }
+
+        function mouseReleased() {
+            draggingLine = null;
+        }
+
+        function windowResized() {
+            resizeCanvas(windowWidth, windowHeight);
+
+            // Adjust line positions proportionally
+            lines.forEach(line => {
+                if (line.isVertical) {
+                    line.y1 = 0;
+                    line.y2 = height;
+                } else {
+                    line.x1 = 0;
+                    line.x2 = width;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
