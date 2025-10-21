@@ -19,7 +19,12 @@ https://github.com/user-attachments/assets/bc050b58-57e5-46b3-885c-5f79259f5178
 
 Open `index.html` in your browser, or visit the live demo at https://zeke.github.io/mondrian/
 
-Click and drag any black horizontal or vertical bar to rearrange the composition.
+**Mouse:**
+- Click and drag any black horizontal or vertical bar to rearrange the composition
+
+**Keyboard:**
+- Press `+` or `=` to add more lines (increases cells)
+- Press `-` to remove lines (decreases cells)
 
 ## License
 
